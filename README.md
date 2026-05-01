@@ -25,11 +25,9 @@ README Badge Studio is a visual tool for generating beautiful [shields.io](https
 
 ## 🚀 Online Demo
 
-> Replace with your GitHub Pages URL after deployment
+**[https://w0nderful666.github.io/readme-badge-studio/](https://w0nderful666.github.io/readme-badge-studio/)**
 
-```
-https://your-username.github.io/readme-badge-studio/
-```
+[![Deploy to GitHub Pages](https://github.com/w0nderful666/readme-badge-studio/actions/workflows/pages/badge.svg)](https://github.com/w0nderful666/readme-badge-studio/actions/workflows/pages)
 
 ## 📸 Screenshots
 
