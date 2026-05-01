@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README Badge Studio - Self Test</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body.dark-mode {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .header p { opacity: 0.9; }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-card.total .stat-number { color: var(--primary-color); }
+        .stat-card.pass .stat-number { color: var(--success-color); }
+        .stat-card.fail .stat-number { color: var(--danger-color); }
+        .stat-card.warn .stat-number { color: var(--warning-color); }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover { background: #1d4ed8; }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover { background: var(--border-color); }
+
+        .tests-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .test-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .test-section-header {
+            padding: 0.75rem 1rem;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-section-header .status {
+            font-size: 0.875rem;
+        }
+
+        .test-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .test-item:last-child { border-bottom: none; }
+
+        .test-status {
+            font-weight: bold;
+            font-size: 0.875rem;
+            min-width: 60px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .test-status.pass { background: rgba(34, 197, 94, 0.1); color: var(--success-color); }
+        .test-status.fail { background: rgba(239, 68, 68, 0.1); color: var(--danger-color); }
+        .test-status.warn { background: rgba(245, 158, 11, 0.1); color: var(--warning-color); }
+
+        .test-content { flex: 1; }
+
+        .test-name { font-weight: 500; margin-bottom: 0.25rem; }
+
+        .test-message { font-size: 0.875rem; color: var(--text-secondary); }
+
+        .test-error { color: var(--danger-color); font-size: 0.875rem; margin-top: 0.25rem; }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 600px) {
+            .stats { gap: 1rem; }
+            .stat-card { min-width: 80px; padding: 0.75rem; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 README Badge Studio Self Test</h1>
+        <p>自动化测试核心功能、DOM 结构和交互模拟</p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card total">
+            <div class="stat-number" id="totalCount">0</div>
+            <div class="stat-label">测试总数</div>
+        </div>
+        <div class="stat-card pass">
+            <div class="stat-number" id="passCount">0</div>
+            <div class="stat-label">通过</div>
+        </div>
+        <div class="stat-card fail">
+            <div class="stat-number" id="failCount">0</div>
+            <div class="stat-label">失败</div>
+        </div>
+        <div class="stat-card warn">
+            <div class="stat-number" id="warnCount">0</div>
+            <div class="stat-label">警告</div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn btn-primary" id="runAllBtn">Run All Tests</button>
+        <button class="btn btn-secondary" id="clearBtn">Clear Results</button>
+        <button class="btn btn-secondary" id="copyBtn">Copy Test Report</button>
+    </div>
+
+    <div id="testsContainer" class="tests-container">
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>加载测试框架中...</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>README Badge Studio &copy; 2026 | 测试报告生成时间: <span id="testTime"></span></p>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="self-test.js"></script>
+</body>
+</html>

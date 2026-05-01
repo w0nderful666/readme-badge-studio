@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README Badge Studio - GitHub 徽章生成器</title>
+    <meta name="description" content="为你的 GitHub 项目生成精美的 shields.io 徽章">
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">
+                <span class="logo-icon">🎨</span>
+                README Badge Studio
+            </h1>
+            <p class="tagline">为你的 GitHub 项目生成精美徽章</p>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="config-panel">
+            <div class="panel-header">
+                <h2>项目配置</h2>
+                <div class="panel-actions">
+                    <button class="btn btn-secondary btn-sm" id="langToggleBtn" title="切换语言">
+                        <span class="btn-icon">🌐</span> <span id="langLabel">EN</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm" id="generateBadgeBtn" title="生成徽章">
+                        <span class="btn-icon">⚡</span> <span data-i18n="generate">生成徽章</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="shareBtn" title="生成分享链接">
+                        <span class="btn-icon">🔗</span> <span data-i18n="share">分享</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="darkModeBtn" title="切换深色模式">
+                        <span class="btn-icon">🌙</span> <span data-i18n="darkMode">深色模式</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="resetBtn" title="恢复默认">
+                        <span class="btn-icon">↺</span> <span data-i18n="reset">重置</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="clearBtn" title="清空配置">
+                        <span class="btn-icon">🗑</span> <span data-i18n="clear">清空</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="config-sections">
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📋</span>
+                        基本信息
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="githubRepoUrl" data-i18n="githubRepoUrl">GitHub 仓库地址</label>
+                            <input type="text" id="githubRepoUrl" placeholder="https://github.com/username/repo">
+                        </div>
+                        <div class="form-group">
+                            <label for="projectName" data-i18n="projectName">项目名称</label>
+                            <input type="text" id="projectName" placeholder="my-awesome-project">
+                        </div>
+                        <div class="form-group">
+                            <label for="githubUsername" data-i18n="githubUsername">GitHub 用户名</label>
+                            <input type="text" id="githubUsername" placeholder="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="githubRepo" data-i18n="githubRepo">GitHub 仓库名</label>
+                            <input type="text" id="githubRepo" placeholder="repo-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="version" data-i18n="version">版本号</label>
+                            <input type="text" id="version" placeholder="v1.0.0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">💡</span>
+                        <span data-i18n="projectType">项目类型</span>
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="projectType" data-i18n="selectProjectType">选择项目类型</label>
+                            <select id="projectType">
+                                <option value="" data-i18n="selectOption">-- 选择 --</option>
+                                <option value="frontend" data-i18n="type.frontend">Frontend Website</option>
+                                <option value="ai" data-i18n="type.ai">AI Tool</option>
+                                <option value="cli" data-i18n="type.cli">CLI Tool</option>
+                                <option value="server" data-i18n="type.server">Server Tool</option>
+                                <option value="extension" data-i18n="type.extension">Browser Extension</option>
+                                <option value="docs" data-i18n="type.docs">Documentation</option>
+                                <option value="library" data-i18n="type.library">Library / Package</option>
+                                <option value="fun" data-i18n="type.fun">Fun Project</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-secondary" id="smartRecommendBtn">
+                                <span class="btn-icon">✨</span> <span data-i18n="smartRecommend">智能推荐徽章</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📜</span>
+                        License 与状态
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="license">License</label>
+                            <select id="license">
+                                <option value="">选择 License</option>
+                                <option value="MIT">MIT</option>
+                                <option value="Apache-2.0">Apache-2.0</option>
+                                <option value="GPL-3.0">GPL-3.0</option>
+                                <option value="BSD-3-Clause">BSD-3-Clause</option>
+                                <option value="MPL-2.0">MPL-2.0</option>
+                                <option value="Custom">Custom</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectStatus">项目状态</label>
+                            <select id="projectStatus">
+                                <option value="">选择状态</option>
+                                <option value="active">Active</option>
+                                <option value="beta">Beta</option>
+                                <option value="experimental">Experimental</option>
+                                <option value="deprecated">Deprecated</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🛠</span>
+                        技术栈 (多选)
+                    </h3>
+                    <div class="batch-actions">
+                        <button class="batch-btn" id="selectAllTech" title="全选技术栈">全选</button>
+                        <button class="batch-btn" id="clearAllTech" title="清空技术栈">清空</button>
+                    </div>
+                    <div class="checkbox-grid" id="techStackContainer">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="HTML">
+                            <span class="checkbox-label">HTML</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="CSS">
+                            <span class="checkbox-label">CSS</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="JavaScript">
+                            <span class="checkbox-label">JavaScript</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="TypeScript">
+                            <span class="checkbox-label">TypeScript</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="React">
+                            <span class="checkbox-label">React</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="Vue">
+                            <span class="checkbox-label">Vue</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="Node.js">
+                            <span class="checkbox-label">Node.js</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="Python">
+                            <span class="checkbox-label">Python</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="Go">
+                            <span class="checkbox-label">Go</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="Rust">
+                            <span class="checkbox-label">Rust</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="Docker">
+                            <span class="checkbox-label">Docker</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="Cloudflare">
+                            <span class="checkbox-label">Cloudflare</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="techStack" value="GitHub Pages">
+                            <span class="checkbox-label">GitHub Pages</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🚀</span>
+                        部署平台 (多选)
+                    </h3>
+                    <div class="batch-actions">
+                        <button class="batch-btn" id="selectAllDeploy" title="全选部署平台">全选</button>
+                        <button class="batch-btn" id="clearAllDeploy" title="清空部署平台">清空</button>
+                    </div>
+                    <div class="checkbox-grid" id="deployPlatformContainer">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="deployPlatform" value="GitHub Pages">
+                            <span class="checkbox-label">GitHub Pages</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="deployPlatform" value="Cloudflare Pages">
+                            <span class="checkbox-label">Cloudflare Pages</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="deployPlatform" value="Vercel">
+                            <span class="checkbox-label">Vercel</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="deployPlatform" value="Netlify">
+                            <span class="checkbox-label">Netlify</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="deployPlatform" value="Docker">
+                            <span class="checkbox-label">Docker</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="deployPlatform" value="Self Hosted">
+                            <span class="checkbox-label">Self Hosted</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🔗</span>
+                        社交链接 (多选)
+                    </h3>
+                    <div class="batch-actions">
+                        <button class="batch-btn" id="selectAllSocial" title="全选社交链接">全选</button>
+                        <button class="batch-btn" id="clearAllSocial" title="清空社交链接">清空</button>
+                        <button class="batch-btn batch-btn-highlight" id="recommendedBtn" title="推荐组合">推荐组合</button>
+                    </div>
+                    <div class="checkbox-grid" id="socialLinksContainer">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="socialLinks" value="GitHub Repo">
+                            <span class="checkbox-label">GitHub 仓库</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="socialLinks" value="GitHub Stars">
+                            <span class="checkbox-label">GitHub Stars</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="socialLinks" value="GitHub Forks">
+                            <span class="checkbox-label">GitHub Forks</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="socialLinks" value="Website">
+                            <span class="checkbox-label">Website</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="socialLinks" value="Documentation">
+                            <span class="checkbox-label">Documentation</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="socialLinks" value="Issues">
+                            <span class="checkbox-label">Issues</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="socialLinks" value="Pull Requests">
+                            <span class="checkbox-label">Pull Requests</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">✨</span>
+                        自定义徽章
+                    </h3>
+                    <div class="custom-badges-header">
+                        <button class="btn btn-secondary btn-sm" id="addCustomBadgeBtn">
+                            <span class="btn-icon">➕</span> 添加自定义徽章
+                        </button>
+                    </div>
+                    <div class="custom-badges-list" id="customBadgesList"></div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🎨</span>
+                        徽章样式
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="badgeStyle">徽章风格</label>
+                            <select id="badgeStyle">
+                                <option value="flat">Flat</option>
+                                <option value="flat-square">Flat Square</option>
+                                <option value="plastic">Plastic</option>
+                                <option value="for-the-badge">For The Badge</option>
+                                <option value="social">Social</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="logoEnabled">
+                                <input type="checkbox" id="logoEnabled" checked>
+                                显示 Logo 图标
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🌈</span>
+                        颜色方案
+                    </h3>
+                    <div class="color-schemes">
+                        <label class="color-scheme-item">
+                            <input type="radio" name="colorScheme" value="auto" checked>
+                            <span class="color-scheme-preview" style="background: linear-gradient(90deg, #4c1, #007ec6, #9cf);"></span>
+                            <span class="color-scheme-label">Auto</span>
+                        </label>
+                        <label class="color-scheme-item">
+                            <input type="radio" name="colorScheme" value="github-dark">
+                            <span class="color-scheme-preview" style="background: #238636;"></span>
+                            <span class="color-scheme-label">GitHub Dark</span>
+                        </label>
+                        <label class="color-scheme-item">
+                            <input type="radio" name="colorScheme" value="pastel">
+                            <span class="color-scheme-preview" style="background: #a8d8ff;"></span>
+                            <span class="color-scheme-label">Soft Pastel</span>
+                        </label>
+                        <label class="color-scheme-item">
+                            <input type="radio" name="colorScheme" value="cyber">
+                            <span class="color-scheme-preview" style="background: #00ff9d;"></span>
+                            <span class="color-scheme-label">Cyber</span>
+                        </label>
+                        <label class="color-scheme-item">
+                            <input type="radio" name="colorScheme" value="minimal">
+                            <span class="color-scheme-preview" style="background: #6c757d;"></span>
+                            <span class="color-scheme-label">Minimal</span>
+                        </label>
+                        <label class="color-scheme-item">
+                            <input type="radio" name="colorScheme" value="warm">
+                            <span class="color-scheme-preview" style="background: #ff6b35;"></span>
+                            <span class="color-scheme-label">Warm</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📝</span>
+                        <span data-i18n="outputFormat">输出格式</span>
+                    </h3>
+                    <div class="output-format-options">
+                        <label class="radio-item">
+                            <input type="radio" name="outputFormat" value="markdown" checked>
+                            <span class="radio-label" data-i18n="outputMarkdown">Markdown 图片</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="outputFormat" value="markdown-link">
+                            <span class="radio-label" data-i18n="outputMarkdownLink">Markdown 图片带链接</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="outputFormat" value="html">
+                            <span class="radio-label" data-i18n="outputHtml">HTML img 标签</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📄</span>
+                        <span data-i18n="fullReadme">完整 README 设置</span>
+                    </h3>
+                    <div class="full-readme-fields">
+                        <div class="form-group">
+                            <label for="projectDescription" data-i18n="projectDescription">项目简介</label>
+                            <textarea id="projectDescription" rows="2" placeholder="一句话介绍你的项目"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="featuresList" data-i18n="featuresList">功能列表 (每行一个)</label>
+                            <textarea id="featuresList" rows="3" placeholder="功能1&#10;功能2&#10;功能3"></textarea>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="installCommand" data-i18n="installCommand">安装命令</label>
+                                <input type="text" id="installCommand" placeholder="npm install xxx">
+                            </div>
+                            <div class="form-group">
+                                <label for="usageCommand" data-i18n="usageCommand">使用命令</label>
+                                <input type="text" id="usageCommand" placeholder="npm run dev">
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="demoUrl" data-i18n="demoUrl">在线演示地址</label>
+                                <input type="text" id="demoUrl" placeholder="https://example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="screenshotUrl" data-i18n="screenshotUrl">截图地址</label>
+                                <input type="text" id="screenshotUrl" placeholder="https://example.com/screenshot.png">
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label data-i18n="showContributing">
+                                    <input type="checkbox" id="showContributing" checked> 显示贡献说明
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="showAcknowledgments">
+                                    <input type="checkbox" id="showAcknowledgments"> 显示致谢
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📸</span>
+                        <span data-i18n="snapshots">配置快照</span>
+                    </h3>
+                    <div class="snapshots-header">
+                        <button class="btn btn-secondary btn-sm" id="saveSnapshotBtn">
+                            <span class="btn-icon">💾</span> <span data-i18n="saveSnapshot">保存快照</span>
+                        </button>
+                    </div>
+                    <div class="snapshots-list" id="snapshotsList"></div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🔍</span>
+                        <span data-i18n="healthCheck">配置健康检查</span>
+                    </h3>
+                    <div class="health-check" id="healthCheck"></div>
+                </div>
+
+                <div class="config-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🚀</span>
+                        <span data-i18n="publishChecklist">发布前检查</span>
+                    </h3>
+                    <div class="publish-checklist" id="publishChecklist"></div>
+                </div>
+
+                <div class="config-section pwa-info">
+                    <h3 class="section-title">
+                        <span class="section-icon">📱</span>
+                        <span data-i18n="pwaStatus">PWA 状态</span>
+                    </h3>
+                    <div class="pwa-status">
+                        <span class="pwa-indicator" id="pwaStatus">Checking...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="preview-panel">
+            <div class="preview-header">
+                <h2>实时预览</h2>
+                <div class="badge-stats">
+                    <span id="badgeCount">0</span> 个徽章
+                </div>
+            </div>
+
+            <div class="preview-tabs">
+                <button class="tab-btn active" data-tab="badges">徽章预览</button>
+                <button class="tab-btn" data-tab="readme">README 预览</button>
+                <button class="tab-btn" data-tab="code">Markdown 代码</button>
+            </div>
+
+            <div class="preview-content">
+                <div class="tab-content active" id="badges-tab">
+                    <div class="badges-preview" id="badgesPreview">
+                        <div class="preview-placeholder">请选择技术栈、部署平台或填写项目信息后生成徽章</div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="readme-tab">
+                    <div class="readme-preview" id="readmePreview">
+                        <div class="preview-placeholder">请先配置并生成徽章</div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="code-tab">
+                    <div class="code-preview">
+                        <div class="markdown-tabs">
+                            <button class="md-tab-btn active" data-md-tab="badges">Badges</button>
+                            <button class="md-tab-btn" data-md-tab="header">Full Header</button>
+                            <button class="md-tab-btn" data-md-tab="urls">Raw URLs</button>
+                            <button class="md-tab-btn" data-md-tab="html">HTML</button>
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn btn-primary btn-sm" id="copyMdBtn">
+                                <span class="btn-icon">📋</span> 复制
+                            </button>
+                            <button class="btn btn-secondary btn-sm" id="downloadReadmeBtn">
+                                <span class="btn-icon">⬇️</span> 下载
+                            </button>
+                        </div>
+                        <pre class="code-block" id="markdownOutput"><code>请先配置并生成徽章</code></pre>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <section class="templates-section">
+        <div class="templates-header">
+            <h2>📑 内置模板</h2>
+            <p class="templates-desc">点击模板快速填充配置</p>
+        </div>
+        <div class="templates-grid">
+            <button class="template-card" data-template="minimal">
+                <div class="template-icon">✨</div>
+                <div class="template-info">
+                    <h3>Minimal Open Source</h3>
+                    <p>简洁开源项目风格</p>
+                </div>
+            </button>
+            <button class="template-card" data-template="modern-web">
+                <div class="template-icon">🌐</div>
+                <div class="template-info">
+                    <h3>Modern Web App</h3>
+                    <p>适合前端网页项目</p>
+                </div>
+            </button>
+            <button class="template-card" data-template="ai-tool">
+                <div class="template-icon">🤖</div>
+                <div class="template-info">
+                    <h3>AI Tool Project</h3>
+                    <p>适合 AI 工具项目</p>
+                </div>
+            </button>
+            <button class="template-card" data-template="server">
+                <div class="template-icon">🖥️</div>
+                <div class="template-info">
+                    <h3>Server / DevOps</h3>
+                    <p>适合服务器、运维项目</p>
+                </div>
+            </button>
+            <button class="template-card" data-template="fun">
+                <div class="template-icon">🎮</div>
+                <div class="template-info">
+                    <h3>Fun Side Project</h3>
+                    <p>适合个人小玩具项目</p>
+                </div>
+            </button>
+        </div>
+    </section>
+
+    <section class="actions-section">
+        <h2 data-i18n="dataManagement">💾 数据管理</h2>
+        <div class="actions-grid">
+            <button class="action-card" id="exportConfigBtn" title="导出当前配置为 JSON">
+                <span class="action-icon">📤</span>
+                <span class="action-text" data-i18n="exportConfig">导出配置</span>
+            </button>
+            <button class="action-card" id="importConfigBtn" title="从 JSON 文件导入配置">
+                <span class="action-icon">📥</span>
+                <span class="action-text" data-i18n="importConfig">导入配置</span>
+            </button>
+            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+            <button class="action-card" id="generateReadmeBtn" title="生成完整的 README 模板">
+                <span class="action-icon">📄</span>
+                <span class="action-text" data-i18n="generateFullReadme">生成完整 README</span>
+            </button>
+            <button class="action-card" id="exportPackageBtn" title="导出完整项目包">
+                <span class="action-icon">📦</span>
+                <span class="action-text" data-i18n="exportPackage">导出项目包</span>
+            </button>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-offline-status" id="offlineStatus">
+            <span class="offline-badge">📡</span>
+            <span data-i18n="localFirst">Local First</span>
+            <span class="offline-divider">|</span>
+            <span data-i18n="worksOffline">Works Offline for UI</span>
+            <span class="offline-divider">|</span>
+            <span data-i18n="badgesNeedOnline">Badges require shields.io</span>
+        </div>
+        <p>Generated with <a href="https://shields.io" target="_blank" rel="noopener">Shields.io</a> | Built with 💙</p>
+        <p class="copyright">README Badge Studio &copy; 2026</p>
+    </footer>
+
+    <div class="toast" id="toast">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
