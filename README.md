@@ -23,9 +23,12 @@ README Badge Studio is a visual tool for generating beautiful [shields.io](https
 - 🌙 **Dark Mode** - Easy on the eyes
 - 🔒 **Privacy First** - All data stored locally, nothing uploaded
 
-## 🚀 Online Demo
+## 🚀 Live Demo & Testing
 
-**[https://w0nderful666.github.io/readme-badge-studio/](https://w0nderful666.github.io/readme-badge-studio/)**
+| | |
+|---|---|
+| **🎨 Live Demo** | **[https://w0nderful666.github.io/readme-badge-studio/](https://w0nderful666.github.io/readme-badge-studio/)** |
+| **🧪 Self Test** | **[https://w0nderful666.github.io/readme-badge-studio/self-test.html](https://w0nderful666.github.io/readme-badge-studio/self-test.html)** |
 
 [![Deploy to GitHub Pages](https://github.com/w0nderful666/readme-badge-studio/actions/workflows/pages/badge.svg)](https://github.com/w0nderful666/readme-badge-studio/actions/workflows/pages)
 

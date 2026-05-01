@@ -2,7 +2,7 @@
     "name": "README Badge Studio",
     "short_name": "Badge Studio",
     "description": "GitHub README 徽章生成器 - Generate beautiful badges for your GitHub projects",
-    "start_url": "/",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#667eea",
     "theme_color": "#667eea",

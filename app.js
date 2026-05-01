@@ -1391,16 +1391,22 @@ ${generateRawUrls()}
 
         if (!isHttps && !isLocalhost) {
             const msg = currentLang === 'zh'
-                ? '⚠ 当前为 HTTP 环境，PWA 需要 HTTPS（如 GitHub Pages）后生效'
-                : '⚠ HTTP environment - PWA requires HTTPS (e.g., GitHub Pages)';
+                ? '⚠ HTTP 环境 - PWA 需要 HTTPS (如 GitHub Pages)'
+                : '⚠ HTTP env - PWA requires HTTPS (GitHub Pages)';
             statusEl.innerHTML = `<span class="pwa-offline">${msg}</span>`;
             return;
         }
 
+        statusEl.innerHTML = '<span class="pwa-checking">' + (currentLang === 'zh' ? '⏳ 初始化 PWA...' : '⏳ Initializing PWA...') + '</span>';
+
         navigator.serviceWorker.register('sw.js').then(() => {
             statusEl.innerHTML = '<span class="pwa-ready">✓ ' + (currentLang === 'zh' ? 'PWA 已就绪' : 'PWA Ready') + '</span>';
         }).catch(err => {
-            statusEl.innerHTML = '<span class="pwa-offline">⚠ ' + (currentLang === 'zh' ? 'PWA 离线模式' : 'Offline Mode') + '</span>';
+            const msg = currentLang === 'zh'
+                ? `⚠ PWA 注册失败: ${err.message || '未知错误'}`
+                : `⚠ PWA registration failed: ${err.message || 'Unknown error'}`;
+            statusEl.innerHTML = `<span class="pwa-offline">${msg}</span>`;
+            console.warn('PWA registration error:', err);
         });
     }
 
